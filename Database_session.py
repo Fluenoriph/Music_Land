@@ -5,7 +5,6 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import Session
 import json
 import requests
-from http.server import HTTPServer, BaseHTTPRequestHandler
 
 
 '''
@@ -68,6 +67,9 @@ print(calc_data_json_dump)
 
 response = requests.post("http://localhost:8000/", json=calc_data_json_dump)
 print(response.text)
+
+
+
 
 
 
