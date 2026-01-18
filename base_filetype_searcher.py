@@ -7,9 +7,10 @@ from abc import ABC, abstractmethod
 class BaseFileTypeSearcher(ABC):
 
     def __init__(self, target_directory, target_file_type):
-        self._all_files = BaseFileTypeSearcher.find_all_files(target_directory)
-        self._target_file_type = target_file_type
-        self._create_file_extension = lambda file_type: '.' + file_type
+        self.all_files = BaseFileTypeSearcher.find_all_files(target_directory)
+        self.target_file_type = target_file_type
+        self.create_file_extension = lambda file_type: '.' + file_type
+
         self.__separated_files = None
 
     @property
@@ -40,6 +41,6 @@ class BaseFileTypeSearcher(ABC):
     def get_files_at_type(self, file_type):
         files = []
 
-        [files.append(file) for file in self._all_files if file.upper().endswith(self._create_file_extension(file_type))]
+        [files.append(file) for file in self.all_files if file.upper().endswith(self.create_file_extension(file_type))]
 
         return files

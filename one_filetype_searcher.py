@@ -9,4 +9,4 @@ class OneFileTypeSearcher(BaseFileTypeSearcher):
         super().__init__(target_directory, target_file_type)
 
     def separating_files_at_type(self):
-        self.separated_files = self.get_files_at_type(self._target_file_type)
+        self.separated_files = self.get_files_at_type(self.target_file_type)

@@ -9,7 +9,7 @@ class MoreFileTypeSearcher(BaseFileTypeSearcher):
         self.separated_files = {}
 
     def separating_files_at_type(self):
-        for file_type in self._target_file_type:
+        for file_type in self.target_file_type:
             current_files = self.get_files_at_type(file_type)
 
             if len(current_files) != 0:
