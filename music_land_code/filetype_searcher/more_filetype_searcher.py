@@ -1,6 +1,6 @@
 # Поиск файлов многих типов.
 
-from base_filetype_searcher import BaseFileTypeSearcher
+from music_land_code.filetype_searcher.base_filetype_searcher import BaseFileTypeSearcher
 
 
 class MoreFileTypeSearcher(BaseFileTypeSearcher):
