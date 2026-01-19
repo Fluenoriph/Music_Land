@@ -1,4 +1,4 @@
-# Класс для извлечения аудиоданных с информацией потока.
+# Класс для извлечения аудио данных с информацией потока.
 
 from music_land_code.filedata_extractor.audio_file_metadata_extractor import AudioFileMetadataExtractor
 from music_land_code.filedata_extractor.round_result import RoundResult
@@ -28,7 +28,7 @@ class AudioFileFullExtractor(AudioFileMetadataExtractor):
         self.__extracted_stream_data = value
 
     # Методы для извлечения данных потока. Проверяются все.
-    # APE не содержит битрейт, а MP3 & MPC не содержат разрядность.
+    # APE не содержит битрейт, а MP3 и MPC не содержат разрядность.
 
     def extract_exist_bitrate(self):
         try:
@@ -48,7 +48,7 @@ class AudioFileFullExtractor(AudioFileMetadataExtractor):
             return RoundResult.round_result(self.audio_info.info.sample_rate / AudioFileFullExtractor.KILO_CONVERT_INDEX,
                                             RoundResult.INT_ROUND_INDEX)
 
-    # Прверить деление чисел с запятой !!!!
+    # Проверить деление чисел с запятой !!!!
 
     def extract_exist_length(self):
         try:
