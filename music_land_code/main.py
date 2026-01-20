@@ -2,7 +2,7 @@ from music_land_code.audio_file_accessor import AudioFileAccessor
 from music_land_code.data import FLAC_TAG_KEYS
 from music_land_code.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
 from music_land_code.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
-from music_land_code.test import SEPARATE_LINE
+from music_land_code.test_code import SEPARATE_LINE
 
 
 flac_file = r"D:\ELECTRONICA\[2001] Various - Moving Shadow 01.1 (Mixed by Timecode)\03 - Rascal & Klone - Winner Takes All.flac"
@@ -12,12 +12,16 @@ mpc_file = r"D:\ELECTRONICA\Easy Star All-Stars - Dub Side Of The Moon\10. Time 
 wav_file = r"D:\ELECTRONICA\Miami Mix 2006 mixed by DJ Skorohott\WAV\07 Дорожка 7.wav"
 m4a_file = r"D:\ELECTRONICA\Pendulum Discography [FLAC]\2006 - Jungle Sound Gold\16. Kingston Vampires.m4a"
 
+# Check all list !!!
+audio_item = AudioFileAccessor(flac_file)
 
-audio_validator = AudioFileAccessor(flac_file)
+if audio_item.is_valid_file:
 
-if audio_validator.is_valid_file:
+
+
+
     file_info_extractor = FileGeneralInfoExtractor(flac_file)
-    audio_info_extractor = AudioFileFullExtractor(audio_validator.audio_info, FLAC_TAG_KEYS)
+    audio_info_extractor = AudioFileFullExtractor(audio_item.audio_info, FLAC_TAG_KEYS)
 
     print(f"\nИмя файла: {file_info_extractor.file_name}")
     print(f"Размер файла: {file_info_extractor.file_size} MB")
@@ -36,5 +40,12 @@ if audio_validator.is_valid_file:
     print(f"Время: {audio_info_extractor.extracted_stream_data[3]} min")
     print(f"Разрядность: {audio_info_extractor.extracted_stream_data[4]} bit")
     print(f"Формат звука: {audio_info_extractor.extracted_stream_data[5]}")
+
+
+
+
+
+
+
 else:
     print("\nФайл не определен или поврежден !\n")

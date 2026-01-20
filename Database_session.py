@@ -43,16 +43,16 @@ class NoiseCalculatorData(base):
     reg_time_id = Column(Integer, ForeignKey('registration_time.reg_time_id'), nullable=False)
 
 
-with Session(autoflush=False, bind=engine) as database_session:
+with Session(autoflush=False, bind=engine) as database_level:
     reg_time_data = RegistrationTime(calc_type_id = 2) # ВРЗ
-    database_session.add(reg_time_data)
-    database_session.commit()
-    database_session.refresh(reg_time_data)
+    database_level.add(reg_time_data)
+    database_level.commit()
+    database_level.refresh(reg_time_data)
 
     formula_type_calculator_data = FormulaTypeCalculatorData(parameter = [3000, 21.4, 758, 0.00025, 0.00147],
                                                              result = [1.0, 0], reg_time_id = reg_time_data.reg_time_id)
-    database_session.add(formula_type_calculator_data)
-    database_session.commit()
+    database_level.add(formula_type_calculator_data)
+    database_level.commit()
 
 print("\nДанные добавлены в базу !")
 '''

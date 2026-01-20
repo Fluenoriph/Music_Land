@@ -3,7 +3,7 @@
 import os
 from abc import ABC, abstractmethod
 
-
+# На вход все файлы, а не директория. Это интерфейс. А то, другой класс ниже уровнем. Один или несколько файлов на запись в базу.
 class BaseFileTypeSearcher(ABC):
 
     def __init__(self, target_directory, target_file_type):
