@@ -1,20 +1,77 @@
-from music_land_code.audio_file_accessor import AudioFileAccessor
-from music_land_code.data import FLAC_TAG_KEYS
+import os
+
+from music_land_code.all_files_searcher import AllFilesSearcher
+from music_land_code.audio_file_validator_mixin import ValidAudioTypeMixin
+from music_land_code.database_level.music_type_struct import MusicTypeStruct
 from music_land_code.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
 from music_land_code.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
 from music_land_code.test_code import SEPARATE_LINE
 
 
-flac_file = r"D:\ELECTRONICA\[2001] Various - Moving Shadow 01.1 (Mixed by Timecode)\03 - Rascal & Klone - Winner Takes All.flac"
-mp3_file = r"D:\ELECTRONICA\-=INFINITI=- Drum & Bass Hard-Box vol.2\7. Tantrum Desire - Transformers.mp3"
-ape = r"D:\ELECTRONICA\Ganja Kru - Super Sharp Shooter EP - ape\Various - DJ Hype Presents the Ganja Kru-Super Sharp Shooter EP.ape"
-mpc_file = r"D:\ELECTRONICA\Easy Star All-Stars - Dub Side Of The Moon\10. Time Version.MPC"
-wav_file = r"D:\ELECTRONICA\Miami Mix 2006 mixed by DJ Skorohott\WAV\07 Дорожка 7.wav"
-m4a_file = r"D:\ELECTRONICA\Pendulum Discography [FLAC]\2006 - Jungle Sound Gold\16. Kingston Vampires.m4a"
+music_dir = r'D:\ELECTRONICA' # Извне
+
+
+print(SEPARATE_LINE)
+print("\nЗапись одного файла в базу - [1]\nПоиск файлов в папке - [2]\n")
+program_variant = input("Ввод: ")
+
+if program_variant == "1":
+    pass
+elif program_variant == "2":
+    #target_directory = input("Введите директорию: ")
+    all_files = AllFilesSearcher(music_dir) # проверка директории ??
+
+    music_struct = MusicTypeStruct()
+    music_struct.add_real_music_files(all_files.files)
+
+    print(SEPARATE_LINE)
+    print("Найдено:")
+
+    [print(f"[ {values[music_struct.TYPE_KEYS[0]]} ] - {len(values[music_struct.TYPE_KEYS[2]])}")
+     for values in music_struct.data.values()]
+
+    print(SEPARATE_LINE)
+
+
+
+
+
+
+
+
+
+    #search_variant = input("\nВведите цифру для поиска определенного формата, для поиска всех введите [0]: ")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Check all list !!!
-audio_item = AudioFileAccessor(flac_file)
+#audio_item = AudioFileAccessor(flac_file)
 
+
+
+
+
+
+'''
 if audio_item.is_valid_file:
 
 
@@ -49,3 +106,4 @@ if audio_item.is_valid_file:
 
 else:
     print("\nФайл не определен или поврежден !\n")
+'''
