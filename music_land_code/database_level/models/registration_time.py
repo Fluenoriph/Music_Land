@@ -1,4 +1,4 @@
-from music_land_code.database_level.data import Base
+from music_land_code.database_level.models.data import Base
 from sqlalchemy import Column, Integer, DateTime
 import datetime
 

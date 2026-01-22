@@ -72,12 +72,12 @@ class MusicTypeStruct(AudioChecker):
     def data(self, data):
         self.__data = data
 
-    def add_real_music_files(self, source_files):
+    def add_real_music_file(self, source_files):
         for file in source_files:
             audio_type = AudioChecker.check_file(file)
 
             if audio_type is not False:          # можно проверить формат также по данным потока
                 for key, value in self.data.items():
-                    if file.upper().endswith('.' + self.data[key][MusicTypeStruct.TYPE_KEYS[0]]):
+                    if file.upper().endswith('.' + self.data[key][MusicTypeStruct.TYPE_KEYS[0]]):  # predicate !!
                         self.data[key][MusicTypeStruct.TYPE_KEYS[2]].append(file)
                         self.data[key][MusicTypeStruct.TYPE_KEYS[3]].append(audio_type)

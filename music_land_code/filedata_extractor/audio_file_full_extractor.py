@@ -48,8 +48,6 @@ class AudioFileFullExtractor(AudioFileMetadataExtractor):
             return RoundResult.round_result(self.audio_info.info.sample_rate / AudioFileFullExtractor.KILO_CONVERT_INDEX,
                                             RoundResult.INT_ROUND_INDEX)
 
-    # Проверить деление чисел с запятой !!!!
-
     def extract_exist_length(self):
         try:
             self.audio_info.info.length

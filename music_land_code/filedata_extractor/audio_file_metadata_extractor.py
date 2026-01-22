@@ -1,6 +1,8 @@
 # Класс для извлечения аудио-метаданных.
 
 class AudioFileMetadataExtractor:
+    TAGS_LEN = 5
+
     def __init__(self, audio_info, tag_keys=None):
         self.audio_info = audio_info
         self.tag_keys = tag_keys
@@ -16,6 +18,8 @@ class AudioFileMetadataExtractor:
                     self.extracted_tags_data.append(tag_value.strip("[']"))
                 else:
                     self.extracted_tags_data.append(None)
+        else:
+            [self.extracted_tags_data.append(None) for _ in range(AudioFileMetadataExtractor.TAGS_LEN)]
 
     @property
     def extracted_tags_data(self):
