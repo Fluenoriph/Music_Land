@@ -8,5 +8,6 @@ class FileData(Base):
     file_name = Column(Text, nullable=False)
     file_size_mb = Column(REAL, nullable=False)
     file_location = Column(Text)
+    file_hash = Column(Text, unique=True)
     file_type_id = Column(Integer, ForeignKey('file_type.file_type_id'), nullable=False) # настроить каскад
     reg_time_id = Column(Integer, ForeignKey('registration_time.reg_time_id'), nullable=False)

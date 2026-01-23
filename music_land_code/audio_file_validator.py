@@ -3,7 +3,7 @@
 import mutagen
 
 
-class ValidAudioTypeMixin:
+class ValidAudioType:
     @staticmethod
     def check_file(file_fullpath):
         try:

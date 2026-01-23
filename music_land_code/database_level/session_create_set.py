@@ -1,12 +1,13 @@
+# Класс, реализующий операцию CREATE базы данных.
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-
 from music_land_code.database_level.models.audio_metadata import AudioMetadata
 from music_land_code.database_level.models.audio_stream_data import AudioStreamData
 from music_land_code.database_level.models.file_data import FileData
 from music_land_code.database_level.models.file_type import FileType
 from music_land_code.database_level.models.registration_time import RegistrationTime
-from music_land_code.database_level.music_type_struct import MusicTypeStruct as MS
+from music_land_code.music_type_struct import MusicTypeStruct as MS
 from music_land_code.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
 from music_land_code.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
 
@@ -18,24 +19,24 @@ class SessionCreateSet:
 
     def create_to_database(self):
         with Session(autoflush=False, bind=self.engine) as db_session:
-            reg_time_data = RegistrationTime()
+            FileType()
 
+            reg_time_data = RegistrationTime()
             db_session.add(reg_time_data)
             db_session.commit()
             db_session.refresh(reg_time_data)
 
             for key, value in self.target_data.items():
-                if any(value[MS.TYPE_KEYS[3]]):
-                    for _ in range(len(value[MS.TYPE_KEYS[3]])):
-                        file_info_extractor = FileGeneralInfoExtractor(value[MS.TYPE_KEYS[2]][_])
-                        audio_info_extractor = AudioFileFullExtractor(value[MS.TYPE_KEYS[3]][_],
-                                                                      value[MS.TYPE_KEYS[1]])
-
-                        FileType()
+                if any(value[MS.DATA_KEYS[3]]):
+                    for _ in range(len(value[MS.DATA_KEYS[3]])):
+                        file_info_extractor = FileGeneralInfoExtractor(value[MS.DATA_KEYS[2]][_])
+                        audio_info_extractor = AudioFileFullExtractor(value[MS.DATA_KEYS[3]][_],
+                                                                      value[MS.DATA_KEYS[1]])
 
                         file_data = FileData(file_name=file_info_extractor.file_name,
                                              file_size_mb=file_info_extractor.file_size,
                                              file_location=file_info_extractor.file_location,
+                                             file_hash=value[MS.DATA_KEYS[4]][_],
                                              file_type_id=key, reg_time_id=reg_time_data.reg_time_id)
 
                         db_session.add(file_data)
@@ -52,7 +53,7 @@ class SessionCreateSet:
                         db_session.add(audio_metadata)
                         db_session.commit()
 
-                        stream_data = AudioStreamData(decoder=audio_info_extractor.extracted_stream_data[0],
+                        stream_data = AudioStreamData(codec=audio_info_extractor.extracted_stream_data[0],
                                                       bitrate_kbps=audio_info_extractor.extracted_stream_data[1],
                                                       sample_rate_khz=audio_info_extractor.extracted_stream_data[2],
                                                       length_min=audio_info_extractor.extracted_stream_data[3],
