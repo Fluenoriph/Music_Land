@@ -22,10 +22,11 @@ class ConsoleOutInfo:
     @staticmethod
     def show_file_extract_data(music_data):
         for values in music_data.values():
-            if any(values[MusicTypeStruct.DATA_KEYS[3]]):
-                for _ in range(len(values[MusicTypeStruct.DATA_KEYS[3]])):
-                    file_info_extractor = FileGeneralInfoExtractor(values[MusicTypeStruct.DATA_KEYS[2]][_])
-                    audio_info_extractor = AudioFileFullExtractor(values[MusicTypeStruct.DATA_KEYS[3]][_],
+            if any(values[MusicTypeStruct.DATA_KEYS[2]]):
+                for _ in range(len(values[MusicTypeStruct.DATA_KEYS[2]])):
+                    file_info_extractor = FileGeneralInfoExtractor(values[MusicTypeStruct.DATA_KEYS[2]][_].file)
+
+                    audio_info_extractor = AudioFileFullExtractor(values[MusicTypeStruct.DATA_KEYS[2]][_].audio_data,
                                                                   values[MusicTypeStruct.DATA_KEYS[1]])
 
                     ConsoleOutInfo.show_separate_line()
@@ -33,7 +34,7 @@ class ConsoleOutInfo:
                     print(f"\nИмя файла: {file_info_extractor.file_name}")
                     print(f"Размер файла: {file_info_extractor.file_size} MB")
                     print(f"Расположение: {file_info_extractor.file_location}")
-                    print(f"MD5 отпечаток: {values[MusicTypeStruct.DATA_KEYS[4]][_]}")
+                    print(f"MD5 отпечаток: {values[MusicTypeStruct.DATA_KEYS[2]][_].hash_sum}")
 
                     print(f"\nИсполнитель: {audio_info_extractor.extracted_tags_data[0]}")
                     print(f"Название: {audio_info_extractor.extracted_tags_data[1]}")

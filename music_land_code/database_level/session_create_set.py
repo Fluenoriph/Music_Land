@@ -27,16 +27,17 @@ class SessionCreateSet:
             db_session.refresh(reg_time_data)
 
             for key, value in self.target_data.items():
-                if any(value[MS.DATA_KEYS[3]]):
-                    for _ in range(len(value[MS.DATA_KEYS[3]])):
-                        file_info_extractor = FileGeneralInfoExtractor(value[MS.DATA_KEYS[2]][_])
-                        audio_info_extractor = AudioFileFullExtractor(value[MS.DATA_KEYS[3]][_],
+                if any(value[MS.DATA_KEYS[2]]):
+                    for _ in range(len(value[MS.DATA_KEYS[2]])):
+                        file_info_extractor = FileGeneralInfoExtractor(value[MS.DATA_KEYS[2]][_].file)
+
+                        audio_info_extractor = AudioFileFullExtractor(value[MS.DATA_KEYS[2]][_].audio_data,
                                                                       value[MS.DATA_KEYS[1]])
 
                         file_data = FileData(file_name=file_info_extractor.file_name,
                                              file_size_mb=file_info_extractor.file_size,
                                              file_location=file_info_extractor.file_location,
-                                             file_hash=value[MS.DATA_KEYS[4]][_],
+                                             file_hash=value[MS.DATA_KEYS[2]][_].hash_sum,
                                              file_type_id=key, reg_time_id=reg_time_data.reg_time_id)
 
                         db_session.add(file_data)

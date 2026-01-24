@@ -1,11 +1,10 @@
 # Структура для поиска музыкальных файлов.
-import hashlib
 
 from audio_file_validator import ValidAudioType as AudioChecker
-from music_land_code.filedata_extractor.file_digest import FileDigest
+from audio_file import AudioFile
 
 
-class MusicTypeStruct(AudioChecker, FileDigest):
+class MusicTypeStruct(AudioChecker):
     MONKEYS_AUDIO_TYPE = 'APE'
     FLAC_TYPE = 'FLAC'
     M4A_TYPE = 'M4A'
@@ -18,7 +17,7 @@ class MusicTypeStruct(AudioChecker, FileDigest):
     M4A_TAG_KEYS = ('\xa9ART', '\xa9nam', '\xa9alb', '\xa9gen', '\xa9day')
     MP3_ID3TYPE_TAG_KEYS = ('TPE1', 'TIT2', 'TALB', 'TCON', 'TDRC')
 
-    DATA_KEYS = ('format', 'metadata_tags', 'files', 'audio', 'file_hashsum')
+    DATA_KEYS = ('format', 'metadata_tags', 'audio_type')
 
     def __init__(self):
         self.__data = {
@@ -26,49 +25,37 @@ class MusicTypeStruct(AudioChecker, FileDigest):
             1: {
                 MusicTypeStruct.DATA_KEYS[0]: MusicTypeStruct.MONKEYS_AUDIO_TYPE,
                 MusicTypeStruct.DATA_KEYS[1]: MusicTypeStruct.APE_MPC_TAG_KEYS,
-                MusicTypeStruct.DATA_KEYS[2]: [],
-                MusicTypeStruct.DATA_KEYS[3]: [],
-                MusicTypeStruct.DATA_KEYS[4]: []
+                MusicTypeStruct.DATA_KEYS[2]: []
             },
 
             2: {
                 MusicTypeStruct.DATA_KEYS[0]: MusicTypeStruct.FLAC_TYPE,
                 MusicTypeStruct.DATA_KEYS[1]: MusicTypeStruct.FLAC_TAG_KEYS,
-                MusicTypeStruct.DATA_KEYS[2]: [],
-                MusicTypeStruct.DATA_KEYS[3]: [],
-                MusicTypeStruct.DATA_KEYS[4]: []
+                MusicTypeStruct.DATA_KEYS[2]: []
             },
 
             3: {
                 MusicTypeStruct.DATA_KEYS[0]: MusicTypeStruct.M4A_TYPE,
                 MusicTypeStruct.DATA_KEYS[1]: MusicTypeStruct.M4A_TAG_KEYS,
-                MusicTypeStruct.DATA_KEYS[2]: [],
-                MusicTypeStruct.DATA_KEYS[3]: [],
-                MusicTypeStruct.DATA_KEYS[4]: []
+                MusicTypeStruct.DATA_KEYS[2]: []
             },
 
             4: {
                 MusicTypeStruct.DATA_KEYS[0]: MusicTypeStruct.MP3_TYPE,
                 MusicTypeStruct.DATA_KEYS[1]: MusicTypeStruct.MP3_ID3TYPE_TAG_KEYS,
-                MusicTypeStruct.DATA_KEYS[2]: [],
-                MusicTypeStruct.DATA_KEYS[3]: [],
-                MusicTypeStruct.DATA_KEYS[4]: []
+                MusicTypeStruct.DATA_KEYS[2]: []
             },
 
             5: {
                 MusicTypeStruct.DATA_KEYS[0]: MusicTypeStruct.MUSEPACK_TYPE,
                 MusicTypeStruct.DATA_KEYS[1]: MusicTypeStruct.APE_MPC_TAG_KEYS,
-                MusicTypeStruct.DATA_KEYS[2]: [],
-                MusicTypeStruct.DATA_KEYS[3]: [],
-                MusicTypeStruct.DATA_KEYS[4]: []
+                MusicTypeStruct.DATA_KEYS[2]: []
             },
 
             6: {
                 MusicTypeStruct.DATA_KEYS[0]: MusicTypeStruct.WAVE_TYPE,
                 MusicTypeStruct.DATA_KEYS[1]: None,
-                MusicTypeStruct.DATA_KEYS[2]: [],
-                MusicTypeStruct.DATA_KEYS[3]: [],
-                MusicTypeStruct.DATA_KEYS[4]: []
+                MusicTypeStruct.DATA_KEYS[2]: []
             }
         }
 
@@ -85,16 +72,6 @@ class MusicTypeStruct(AudioChecker, FileDigest):
             audio_type = AudioChecker.check_file(file)
 
             if audio_type is not False:                          # можно проверить формат также по данным потока
-                for key, value in self.data.items():
+                for key in self.data.keys():
                     if file.upper().endswith('.' + self.data[key][MusicTypeStruct.DATA_KEYS[0]]):
-                        self.data[key][MusicTypeStruct.DATA_KEYS[2]].append(file)
-                        self.data[key][MusicTypeStruct.DATA_KEYS[3]].append(audio_type)
-
-    def compute_file_hashsum(self):
-        for values in self.data.values():
-            if any(values[MusicTypeStruct.DATA_KEYS[2]]):
-                for file in values[MusicTypeStruct.DATA_KEYS[2]]:
-                    hash_sum = FileDigest.md5(file)
-
-                    if hash_sum not in values[MusicTypeStruct.DATA_KEYS[4]]:   # delete to index ??
-                        values[MusicTypeStruct.DATA_KEYS[4]].append(hash_sum)
+                        self.data[key][MusicTypeStruct.DATA_KEYS[2]].append(AudioFile(file=file, audio_type=audio_type))

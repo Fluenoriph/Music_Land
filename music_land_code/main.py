@@ -17,7 +17,6 @@ while True:
 
     music_struct = MusicTypeStruct()
     music_struct.add_real_music_file(input_data)
-    music_struct.compute_file_hashsum()
 
     out_info.show_finding_info(music_struct.data)
 
