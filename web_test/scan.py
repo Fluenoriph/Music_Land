@@ -1,19 +1,24 @@
 import socket
-import sys
+import threading
+import timeit
 
-def check_port(host, port):
-    s = socket.socket()
-    s.settimeout(1)
-    result = s.connect_ex((host, port))
-    if result == 0:
-        print(f"[+] Порт {port} открыт")
-    elif result == 111 or result == 10061:
-        print(f"[-] Порт {port} закрыт")
-    else:
-        print(f"[?] Порт {port} фильтруется или неизвестный ответ ({result})")
-    s.close()
 
-host = sys.argv[1]
+def check_port_single_thread():
+    for port in range(20, 100):
+        s = socket.socket()
+        s.settimeout(1)
+        result = s.connect_ex(('127.0.0.1', port))
 
-for port in range(20, 26):
-    check_port("ip_addr", port)
+        if result == 0:
+            print(f"[+] Порт {port} открыт")
+        s.close()
+
+def check_port_multi_thread():
+
+
+
+
+
+execution_time = timeit.timeit(lambda: check_port_single_thread(), number=1)
+
+print('Code time:', execution_time)
