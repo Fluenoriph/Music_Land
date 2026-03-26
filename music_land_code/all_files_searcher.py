@@ -4,13 +4,7 @@ import os
 
 
 class AllFilesSearcher:
-    def __init__(self, path):
-        self.__files = AllFilesSearcher.find_all_files(path)
-
-    @property
-    def files(self):
-        return self.__files
-
+            
     @staticmethod
     def find_all_files(path):
         files = []

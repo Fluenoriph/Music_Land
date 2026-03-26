@@ -4,6 +4,7 @@ import mutagen
 
 
 class ValidAudioType:
+    
     @staticmethod
     def check_file(file_fullpath):
         try:

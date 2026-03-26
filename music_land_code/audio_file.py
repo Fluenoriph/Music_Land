@@ -2,7 +2,7 @@ import hashlib
 
 
 class AudioFile:
-    BUFFER_SIZE = 4096
+    BUFFER_SIZE = 4096 # 65536 (64 kb)
 
     def __init__(self, file, audio_type):
         self.__file = file
@@ -21,6 +21,7 @@ class AudioFile:
     def hash_sum(self):
         return self.__hash_sum
 
+    # Возможно здесь поток выполнения ??
     def md5_digest(self):
         hash_md5 = hashlib.md5()
 
