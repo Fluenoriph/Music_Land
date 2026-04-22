@@ -8,9 +8,9 @@ class AudioFileMetadataExtractor:
         self.tag_keys = tag_keys
         self.__extracted_tags_data = []
 
-        is_tags_exist = (self.tag_keys is not None) and (self.audio_info.tags is not None)
+        #is_tags_exist = (self.tag_keys is not None) and (self.audio_info.tags is not None)
 
-        if is_tags_exist:
+        if (self.tag_keys is not None) and (self.audio_info.tags is not None):
             for tag in self.tag_keys:
                 if tag in self.audio_info.tags:
                     tag_value = str(self.audio_info[tag])

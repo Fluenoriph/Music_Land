@@ -2,7 +2,7 @@ import hashlib
 
 
 class AudioFile:
-    BUFFER_SIZE = 4096 # 65536 (64 kb)
+    BUFFER_SIZE = 65536
 
     def __init__(self, file, audio_type):
         self.__file = file

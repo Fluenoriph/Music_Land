@@ -3,8 +3,8 @@
 import os
 
 from music_type_struct import MusicTypeStruct
-from music_land_code.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
-from music_land_code.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
+from app.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
+from app.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
 from all_files_searcher import AllFilesSearcher
 
 

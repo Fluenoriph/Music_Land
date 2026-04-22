@@ -1,7 +1,7 @@
 # Класс для извлечения аудио данных с информацией потока.
 
-from music_land_code.filedata_extractor.audio_file_metadata_extractor import AudioFileMetadataExtractor
-from music_land_code.filedata_extractor.round_result import RoundResult
+from app.filedata_extractor.audio_file_metadata_extractor import AudioFileMetadataExtractor
+from app.filedata_extractor.round_result import RoundResult
 
 
 class AudioFileFullExtractor(AudioFileMetadataExtractor):

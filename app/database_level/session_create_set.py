@@ -2,14 +2,14 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from music_land_code.database_level.models.audio_metadata import AudioMetadata
-from music_land_code.database_level.models.audio_stream_data import AudioStreamData
-from music_land_code.database_level.models.file_data import FileData
-from music_land_code.database_level.models.file_type import FileType
-from music_land_code.database_level.models.registration_time import RegistrationTime
-from music_land_code.music_type_struct import MusicTypeStruct as MS
-from music_land_code.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
-from music_land_code.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
+from app.database_level.models.audio_metadata import AudioMetadata
+from app.database_level.models.audio_stream_data import AudioStreamData
+from app.database_level.models.file_data import FileData
+from app.database_level.models.file_type import FileType
+from app.database_level.models.registration_time import RegistrationTime
+from app.music_type_struct import MusicTypeStruct as MS
+from app.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
+from app.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
 
 
 class SessionCreateSet:
