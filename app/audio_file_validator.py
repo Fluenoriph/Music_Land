@@ -1,15 +1,15 @@
-# Класс для валидации аудиофайла.
+# Класс, который проверяет, действительно ли это аудиофайл.
 
 import mutagen
 
 
-class ValidAudioType:
+class AudioFileValidator:
     
     @staticmethod
     def check_file(file_fullpath):
         try:
-            audio = mutagen.File(file_fullpath)
+            audio_file_type = mutagen.File(file_fullpath)
         except mutagen.MutagenError:
             return False
         else:
-            return audio
+            return audio_file_type

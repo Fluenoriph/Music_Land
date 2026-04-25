@@ -6,7 +6,9 @@ class AudioFile:
 
     def __init__(self, file, audio_type):
         self.__file = file
+
         self.__audio_data = audio_type
+
         self.__hash_sum = self.md5_digest()
 
     @property

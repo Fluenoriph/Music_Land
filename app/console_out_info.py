@@ -56,6 +56,10 @@ class ConsoleOutInfo:
         [print(f" [ {values[MusicTypeStruct.DATA_KEYS[0]]} ] - {len(values[MusicTypeStruct.DATA_KEYS[2]])}")
             for values in music_data.values() if len(values[MusicTypeStruct.DATA_KEYS[2]]) != 0]
 
+
+
+
+
     @staticmethod
     def enter_data():
         input_data = []
@@ -67,6 +71,7 @@ class ConsoleOutInfo:
         while True:             # Счетчик попыток ???
             data = input('> ')
 
+            # another logic, not print info !!!
             if data == 's' and any(input_data):
                 break
             else:
@@ -78,7 +83,12 @@ class ConsoleOutInfo:
                 else:
                     print(" Директория не существует ! Повторите...\n")
 
-        return input_data
+        return input_data   # return
+
+
+
+
+
 
     @staticmethod
     def try_restart():

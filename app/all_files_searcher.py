@@ -2,7 +2,7 @@
 
 import os
 
-
+# all files.... maybe sort to music types ???
 class AllFilesSearcher:
             
     @staticmethod
