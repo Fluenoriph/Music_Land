@@ -1,15 +1,17 @@
 import os.path
-
+from dotenv import load_dotenv
+import os
 from console_out_info import ConsoleOutInfo
 from music_type_struct import MusicTypeStruct
 from cli_utility.database_level.session_create_set import SessionCreateSet
 
 import time
 
-connect = "postgresql://music_user:robov@localhost:5432/music_land_test"   # in env file
+load_dotenv()
+connect_to_db = os.getenv('DATABASE_URL')
 
 # /media/ripher12/samsung_ssd/ELECTRONICA/[ASHADOW941CD] Moving Shadow 04.1 mixed By Timecode [2004]
-
+# /home/fluenoriph/music_test/media/ripher12/samsung_ssd/ELECTRONICA/[ASHADOW941CD] Moving Shadow 04.1 mixed By Timecode [2004]
 
 out_info = ConsoleOutInfo()
 out_info.show_about_program()
@@ -64,7 +66,7 @@ while True:
 
 
     if input("\n Добавить в базу ? [ y(да) / n(нет) ]: ") == "y":
-        database_set = SessionCreateSet(connect, music_struct.data)
+        database_set = SessionCreateSet(connect_to_db, music_struct.data)
         database_set.create_to_database()
 
         print("\n Данные добавлены !\n")
