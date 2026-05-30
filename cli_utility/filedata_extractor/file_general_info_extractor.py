@@ -1,7 +1,7 @@
 # Класс для извлечения основной информации о файле.
 
 import os
-from app.filedata_extractor.round_result import RoundResult
+from cli_utility.filedata_extractor.round_result import RoundResult
 
 
 class FileGeneralInfoExtractor:

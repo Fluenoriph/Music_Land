@@ -1,13 +1,14 @@
 import mutagen
+import re
 
 
 source = r"D:\ELECTRONICA\[2001] Various - Moving Shadow 01.1 (Mixed by Timecode)\13 - D Kay - Monolith.flac"
-flac_file = r"D:\ELECTRONICA\[2001] Various - Moving Shadow 01.1 (Mixed by Timecode)\03 - Rascal & Klone - Winner Takes All.flac"
-mp3_file = r"D:\ELECTRONICA\-=INFINITI=- Drum & Bass Hard-Box vol.2\7. Tantrum Desire - Transformers.mp3"
-ape_file = r"D:\ELECTRONICA\Ganja Kru - Super Sharp Shooter EP - ape\Various - DJ Hype Presents the Ganja Kru-Super Sharp Shooter EP.ape"
-mpc_file = r"D:\ELECTRONICA\Easy Star All-Stars - Dub Side Of The Moon\10. Time Version.MPC"
-wav_file = r"D:\ELECTRONICA\Miami Mix 2006 mixed by DJ Skorohott\WAV\07 Дорожка 7.wav"
-m4a_file = r"D:\ELECTRONICA\Pendulum Discography [FLAC]\2006 - Jungle Sound Gold\16. Kingston Vampires.m4a"
+flac_file = r"/media/ripher12/samsung_ssd/ELECTRONICA/[2001] Various - Moving Shadow 01.1 (Mixed by Timecode)/03 - Rascal & Klone - Winner Takes All.flac"
+mp3_file = r"/media/ripher12/samsung_ssd/ELECTRONICA/-=INFINITI=- Drum & Bass Hard-Box vol.2/7. Tantrum Desire - Transformers.mp3"
+ape_file = r"/media/ripher12/samsung_ssd/ELECTRONICA/Ganja Kru - Super Sharp Shooter EP - ape/Various - DJ Hype Presents the Ganja Kru-Super Sharp Shooter EP.ape"
+mpc_file = r"/media/ripher12/samsung_ssd/ELECTRONICA/Easy Star All-Stars - Dub Side Of The Moon/10. Time Version.MPC"
+wav_file = r"/media/ripher12/samsung_ssd/ELECTRONICA/Miami Mix 2006 mixed by DJ Skorohott/WAV/07 Дорожка 7.wav"
+m4a_file = r"/media/ripher12/samsung_ssd/ELECTRONICA/Pendulum Discography [FLAC]/2006 - Jungle Sound Gold/16. Kingston Vampires.m4a"
 
 
 # Извлечение метаданных из списка файлов одного типа.
@@ -28,8 +29,8 @@ def extract_audio_data_at_filetype_list(files, tags=None):
             bad_files[file_count] = file
             continue
         else:
-            stream_info = audio_info.pprint().split('\n')[0]
-            stream_type = stream_info.split(',')[0]
+            stream_info = audio_info.pprint() #.split('\n')[0]
+            #stream_type = stream_info.split(',')   #[0]
 
             tags_data = []
 
@@ -43,7 +44,16 @@ def extract_audio_data_at_filetype_list(files, tags=None):
             print(f"Файл № {file_count}: {file}")
             [print(tag_value) for tag_value in tags_data]
 
-            print(f"\nДекодер: {stream_type}")
+            #print(f"\nДекодер: {stream_type}")
+
+            match = re.search(re.compile(r'audio/.+', re.IGNORECASE), stream_info)
+
+            if match:
+                print(match.group().split('/')[-1].strip(')'))
+
+
+            #print(stream_info)       # str
+
 
             ch = audio_info.info.channels
             if ch == 1 or 2:
@@ -60,3 +70,5 @@ def extract_audio_data_at_filetype_list(files, tags=None):
     print(f"Обработано - {file_count} файлов\n")
     print("Поврежденные файлы:\n")
 
+
+extract_audio_data_at_filetype_list((flac_file, mp3_file, ape_file, mpc_file, wav_file, m4a_file))

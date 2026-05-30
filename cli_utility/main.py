@@ -2,11 +2,13 @@ import os.path
 
 from console_out_info import ConsoleOutInfo
 from music_type_struct import MusicTypeStruct
-from app.database_level.session_create_set import SessionCreateSet
+from cli_utility.database_level.session_create_set import SessionCreateSet
 
 import time
 
-connect = "postgresql://fluen:robov@localhost:5432/music_land_test"   # in env file
+connect = "postgresql://music_user:robov@localhost:5432/music_land_test"   # in env file
+
+# /media/ripher12/samsung_ssd/ELECTRONICA/[ASHADOW941CD] Moving Shadow 04.1 mixed By Timecode [2004]
 
 
 out_info = ConsoleOutInfo()
@@ -23,7 +25,10 @@ while True:
     music_struct.add_real_music_file(input_data)
 
     end = time.time() - start
-    print(end)
+
+    out_info.show_file_extract_data(music_struct.data)
+
+    print(f'\n{end}')
 
     break
 

@@ -12,4 +12,7 @@ class AudioFileValidator:
         except mutagen.MutagenError:
             return False
         else:
-            return audio_file_type
+            if type(audio_file_type) is not type(None):
+                return audio_file_type
+            else:
+                return False

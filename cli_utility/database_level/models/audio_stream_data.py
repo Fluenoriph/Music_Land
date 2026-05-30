@@ -1,4 +1,4 @@
-from app.database_level.models.data import Base
+from cli_utility.database_level.models.data import Base
 from sqlalchemy import Column, Integer, Text, ForeignKey, REAL
 
 

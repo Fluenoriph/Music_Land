@@ -3,8 +3,8 @@
 import os
 
 from music_type_struct import MusicTypeStruct
-from app.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
-from app.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
+from cli_utility.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
+from cli_utility.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
 from all_files_searcher import AllFilesSearcher
 
 
@@ -24,9 +24,9 @@ class ConsoleOutInfo:
         for values in music_data.values():
             if any(values[MusicTypeStruct.DATA_KEYS[2]]):
                 for _ in range(len(values[MusicTypeStruct.DATA_KEYS[2]])):
-                    file_info_extractor = FileGeneralInfoExtractor(values[MusicTypeStruct.DATA_KEYS[2]][_].file)
+                    file_info_extractor = FileGeneralInfoExtractor(values[MusicTypeStruct.DATA_KEYS[2]][_][0])
 
-                    audio_info_extractor = AudioFileFullExtractor(values[MusicTypeStruct.DATA_KEYS[2]][_].audio_data,
+                    audio_info_extractor = AudioFileFullExtractor(values[MusicTypeStruct.DATA_KEYS[2]][_][2],
                                                                   values[MusicTypeStruct.DATA_KEYS[1]])
 
                     ConsoleOutInfo.show_separate_line()
@@ -34,7 +34,7 @@ class ConsoleOutInfo:
                     print(f"\nИмя файла: {file_info_extractor.file_name}")
                     print(f"Размер файла: {file_info_extractor.file_size} MB")
                     print(f"Расположение: {file_info_extractor.file_location}")
-                    print(f"MD5 отпечаток: {values[MusicTypeStruct.DATA_KEYS[2]][_].hash_sum}")
+                    print(f"MD5 отпечаток: {values[MusicTypeStruct.DATA_KEYS[2]][_][1]}")
 
                     print(f"\nИсполнитель: {audio_info_extractor.extracted_tags_data[0]}")
                     print(f"Название: {audio_info_extractor.extracted_tags_data[1]}")
@@ -55,7 +55,6 @@ class ConsoleOutInfo:
 
         [print(f" [ {values[MusicTypeStruct.DATA_KEYS[0]]} ] - {len(values[MusicTypeStruct.DATA_KEYS[2]])}")
             for values in music_data.values() if len(values[MusicTypeStruct.DATA_KEYS[2]]) != 0]
-
 
 
 
