@@ -1,23 +1,12 @@
 # Класс для вывода информации в консоль.
 
-import os
-
-from music_type_struct import MusicTypeStruct
+from cli_utility.music_type_struct import MusicTypeStruct
 from cli_utility.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
 from cli_utility.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
-from all_files_searcher import AllFilesSearcher
 
 
 class ConsoleOutInfo:
     SEPARATE_LINE = '\n-------------------------------------------------------------------------------------------'
-
-    @staticmethod
-    def show_about_program():
-        print("\n * Music-Land Program *\n Ivan Bogdanov. All rights reserved. 2026")
-
-    @staticmethod
-    def show_separate_line():
-        print(ConsoleOutInfo.SEPARATE_LINE)
 
     @staticmethod
     def show_file_extract_data(music_data):
@@ -29,7 +18,7 @@ class ConsoleOutInfo:
                     audio_info_extractor = AudioFileFullExtractor(values[MusicTypeStruct.DATA_KEYS[2]][_][2],
                                                                   values[MusicTypeStruct.DATA_KEYS[1]])
 
-                    ConsoleOutInfo.show_separate_line()
+                    print(ConsoleOutInfo.SEPARATE_LINE)
 
                     print(f"\nИмя файла: {file_info_extractor.file_name}")
                     print(f"Размер файла: {file_info_extractor.file_size} MB")
@@ -53,44 +42,5 @@ class ConsoleOutInfo:
     def show_finding_info(music_data):
         print("\nНайдено:\n")
 
-        [print(f" [ {values[MusicTypeStruct.DATA_KEYS[0]]} ] - {len(values[MusicTypeStruct.DATA_KEYS[2]])}")
+        [print(f" [ {values[MusicTypeStruct.DATA_KEYS[0]].upper()} ] - {len(values[MusicTypeStruct.DATA_KEYS[2]])}")
             for values in music_data.values() if len(values[MusicTypeStruct.DATA_KEYS[2]]) != 0]
-
-
-
-
-    @staticmethod
-    def enter_data():
-        input_data = []
-
-        print(r" Введите путь к папке с файлами или полные пути файлов по очереди. "
-              r"Образец: C:\Folder\Subfolder | \file.mp3")
-        print(" - после ввода всех файлов введите 's' и нажмите 'Enter'\n")
-
-        while True:             # Счетчик попыток ???
-            data = input('> ')
-
-            # another logic, not print info !!!
-            if data == 's' and any(input_data):
-                break
-            else:
-                if os.path.exists(data):
-                    if os.path.isdir(data):
-                        return AllFilesSearcher.find_all_files(data)
-                    else:
-                        input_data.append(data)
-                else:
-                    print(" Директория не существует ! Повторите...\n")
-
-        return input_data   # return
-
-
-
-
-
-
-    @staticmethod
-    def try_restart():
-        out = r" __/\__/\__ - Для перезапуска введите 'r', для выхода любую клавишу - __/\__/\__"
-
-        return input(f"\n{out}")

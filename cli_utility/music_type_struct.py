@@ -3,13 +3,13 @@
 import threading
 import queue
 import re
-from audio_file_validator import AudioFileValidator as AudioChecker
-from file_digest import FileDigest
+from cli_utility.audio_file_validator import AudioFileValidator as AudioChecker
+from cli_utility.file_digest import FileDigest
 
-
+# may be split this class ??????? -----------------------------
 class MusicTypeStruct(AudioChecker):
     DATA_KEYS = ('format', 'metadata_tags', 'audio_file_composite_data')
-    # Проследить во всем коде эти ключи
+
     def __init__(self):
         self.__data = {
 
@@ -49,7 +49,7 @@ class MusicTypeStruct(AudioChecker):
                 MusicTypeStruct.DATA_KEYS[2]: []
             }
         }
-                # may be split this class ??????? -----------------------------
+
     @property
     def data(self):
         return self.__data
@@ -57,32 +57,6 @@ class MusicTypeStruct(AudioChecker):
     @data.setter
     def data(self, data):
         self.__data = data
-
-    def add_real_music_file(self, source_files):
-        if len(source_files) > 1:
-            q = queue.Queue()
-
-            for random_file in source_files:
-                q.put(random_file)
-
-            def audio_type_task_operation():
-                while not q.empty():
-                    file = q.get()
-                    self.add_valid_audio_to_data(file)
-                    q.task_done()
-
-            MAX_THREADS = 100
-            threads = []
-            for _ in range(min(MAX_THREADS, q.qsize())):
-                t = threading.Thread(target=audio_type_task_operation)
-                t.start()
-                threads.append(t)
-
-            for t in threads:
-                t.join()
-
-        else:
-            self.add_valid_audio_to_data(source_files[0])
 
     @staticmethod
     def extract_audio_file_type(stream_info):
@@ -93,12 +67,34 @@ class MusicTypeStruct(AudioChecker):
         else:
             return None
 
-    def add_valid_audio_to_data(self, file):
+    def add_real_one_music_file(self, file):
         audio_type = AudioChecker.check_file(file)
 
         if audio_type is not False:
-            for key in self.data.keys():
+            for key in self.data.keys():    # test !!!
                 if (MusicTypeStruct.extract_audio_file_type(audio_type.pprint()) ==
                             self.data[key][MusicTypeStruct.DATA_KEYS[0]]):
                     self.data[key][MusicTypeStruct.DATA_KEYS[2]].append((file, FileDigest.md5_digest(file), audio_type))
                     break
+
+    def add_real_some_music_files(self, random_files):
+        q = queue.Queue()
+
+        for random_file in random_files:
+            q.put(random_file)
+
+        def audio_type_task_operation():
+            while not q.empty():
+                file = q.get()
+                self.add_real_one_music_file(file)
+                q.task_done()
+
+        MAX_THREADS = 100
+        threads = []
+        for _ in range(min(MAX_THREADS, q.qsize())):
+            thread = threading.Thread(target=audio_type_task_operation)
+            thread.start()
+            threads.append(thread)
+
+        for thread in threads:
+            thread.join()
