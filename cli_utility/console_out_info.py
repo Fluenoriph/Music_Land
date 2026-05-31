@@ -39,8 +39,6 @@ class ConsoleOutInfo:
                     print(f"Формат звука: {audio_info_extractor.extracted_stream_data[5]}")
 
     @staticmethod
-    def show_finding_info(music_data):
-        print("\nНайдено:\n")
-
+    def show_audio_files_count(music_data):
         [print(f" [ {values[MusicTypeStruct.DATA_KEYS[0]].upper()} ] - {len(values[MusicTypeStruct.DATA_KEYS[2]])}")
             for values in music_data.values() if len(values[MusicTypeStruct.DATA_KEYS[2]]) != 0]

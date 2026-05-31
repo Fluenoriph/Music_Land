@@ -3,15 +3,15 @@
 class AudioFileMetadataExtractor:
     TAGS_LEN = 5
 
-    def __init__(self, audio_info, tag_keys=None):
-        self.audio_info = audio_info
+    def __init__(self, audio_type, tag_keys=None):
+        self.audio_type = audio_type
         self.tag_keys = tag_keys
         self.__extracted_tags_data = []
 
-        if (self.tag_keys is not None) and (self.audio_info.tags is not None):
+        if (self.tag_keys is not None) and (self.audio_type.tags is not None):
             for tag in self.tag_keys:
-                if tag in self.audio_info.tags:
-                    tag_value = str(self.audio_info[tag])
+                if tag in self.audio_type.tags:
+                    tag_value = str(self.audio_type[tag])
 
                     self.extracted_tags_data.append(tag_value.strip("[']"))
                 else:

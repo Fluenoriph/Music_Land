@@ -1,4 +1,4 @@
-# Структура для поиска музыкальных файлов.
+# Класс для создания структуры валидированных аудио файлов.
 
 import threading
 import queue
@@ -6,7 +6,8 @@ import re
 from cli_utility.audio_file_validator import AudioFileValidator as AudioChecker
 from cli_utility.file_digest import FileDigest
 
-# may be split this class ??????? -----------------------------
+# May be split this class ??????? -----------------------------
+# Может в дальнейшем нужно будет искать другие форматы !!
 class MusicTypeStruct(AudioChecker):
     DATA_KEYS = ('format', 'metadata_tags', 'audio_file_composite_data')
 

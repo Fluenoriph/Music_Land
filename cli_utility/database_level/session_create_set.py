@@ -1,4 +1,4 @@
-# Класс, реализующий операцию CREATE базы данных.
+# Класс, реализующий операцию CREATE.
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -7,7 +7,7 @@ from cli_utility.database_level.models.audio_stream_data import AudioStreamData
 from cli_utility.database_level.models.file_data import FileData
 from cli_utility.database_level.models.file_type import FileType
 from cli_utility.database_level.models.registration_time import RegistrationTime
-from cli_utility.music_type_struct import MusicTypeStruct as MS
+from cli_utility.music_type_struct import MusicTypeStruct
 from cli_utility.filedata_extractor.audio_file_full_extractor import AudioFileFullExtractor
 from cli_utility.filedata_extractor.file_general_info_extractor import FileGeneralInfoExtractor
 
@@ -27,17 +27,17 @@ class SessionCreateSet:
             db_session.refresh(reg_time_data)
 
             for key, value in self.target_data.items():
-                if any(value[MS.DATA_KEYS[2]]):
-                    for _ in range(len(value[MS.DATA_KEYS[2]])):
-                        file_info_extractor = FileGeneralInfoExtractor(value[MS.DATA_KEYS[2]][_].file)
+                if any(value[MusicTypeStruct.DATA_KEYS[2]]):
+                    for _ in range(len(value[MusicTypeStruct.DATA_KEYS[2]])):
+                        file_info_extractor = FileGeneralInfoExtractor(value[MusicTypeStruct.DATA_KEYS[2]][_][0])
 
-                        audio_info_extractor = AudioFileFullExtractor(value[MS.DATA_KEYS[2]][_].audio_data,
-                                                                      value[MS.DATA_KEYS[1]])
+                        audio_info_extractor = AudioFileFullExtractor(value[MusicTypeStruct.DATA_KEYS[2]][_][2],
+                                                                      value[MusicTypeStruct.DATA_KEYS[1]])
 
                         file_data = FileData(file_name=file_info_extractor.file_name,
                                              file_size_mb=file_info_extractor.file_size,
                                              file_location=file_info_extractor.file_location,
-                                             file_hash=value[MS.DATA_KEYS[2]][_].hash_sum,
+                                             file_hash=value[MusicTypeStruct.DATA_KEYS[2]][_][1],
                                              file_type_id=key, reg_time_id=reg_time_data.reg_time_id)
 
                         db_session.add(file_data)
