@@ -1,5 +1,5 @@
 from cli_utility.database_level.models.data import Base
-from sqlalchemy import Column, Integer, Text, ForeignKey
+from sqlalchemy import Column, Integer, Text, ForeignKey, SmallInteger
 
 
 class AudioMetadata(Base):
@@ -9,5 +9,5 @@ class AudioMetadata(Base):
     title = Column(Text)
     album = Column(Text)
     genre = Column(Text)
-    year = Column(Text)
+    year = Column(SmallInteger)
     file_data_id = Column(Integer, ForeignKey('file_data.file_data_id'), nullable=False)

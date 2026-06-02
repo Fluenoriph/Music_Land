@@ -1,5 +1,5 @@
 from cli_utility.database_level.models.data import Base
-from sqlalchemy import Column, Integer, Text, ForeignKey, REAL
+from sqlalchemy import Column, Integer, Text, ForeignKey
 
 
 class AudioStreamData(Base):
@@ -8,7 +8,7 @@ class AudioStreamData(Base):
     codec = Column(Text, nullable=False)
     bitrate_kbps = Column(Integer)
     sample_rate_khz = Column(Integer)
-    length_min = Column(REAL)
+    duration_seconds = Column(Integer)
     bits_per_sample_bit = Column(Integer)
     channels = Column(Text)
     file_data_id = Column(Integer, ForeignKey('file_data.file_data_id'), nullable=False)

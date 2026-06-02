@@ -46,13 +46,13 @@ def extract_audio_data_at_filetype_list(files, tags=None):
 
             #print(f"\nДекодер: {stream_type}")
 
-            match = re.search(re.compile(r'audio/.+', re.IGNORECASE), stream_info)
+            #match = re.search(re.compile(r'audio/.+', re.IGNORECASE), stream_info)
 
-            if match:
-                print(match.group().split('/')[-1].strip(')'))
+            #if match:
+                #print(match.group().split('/')[-1].strip(')'))
 
 
-            #print(stream_info)       # str
+            print(stream_info)       # str
 
 
             ch = audio_info.info.channels

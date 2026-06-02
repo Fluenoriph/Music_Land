@@ -4,7 +4,7 @@ import threading
 import queue
 import re
 from cli_utility.audio_file_validator import AudioFileValidator as AudioChecker
-from cli_utility.file_digest import FileDigest
+from cli_utility.sha256_digest import SHA256Digest
 
 # May be split this class ??????? -----------------------------
 # Может в дальнейшем нужно будет искать другие форматы !!
@@ -75,7 +75,8 @@ class MusicTypeStruct(AudioChecker):
             for key in self.data.keys():    # test !!!
                 if (MusicTypeStruct.extract_audio_file_type(audio_type.pprint()) ==
                             self.data[key][MusicTypeStruct.DATA_KEYS[0]]):
-                    self.data[key][MusicTypeStruct.DATA_KEYS[2]].append((file, FileDigest.md5_digest(file), audio_type))
+                    self.data[key][MusicTypeStruct.DATA_KEYS[2]].append((file, SHA256Digest.compute_digest(file),
+                                                                         audio_type))
                     break
 
     def add_real_some_music_files(self, random_files):

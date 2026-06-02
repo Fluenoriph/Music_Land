@@ -1,13 +1,10 @@
 # Класс для извлечения аудио данных с информацией потока.
 
 from cli_utility.filedata_extractor.audio_file_metadata_extractor import AudioFileMetadataExtractor
-from cli_utility.filedata_extractor.round_result import RoundResult
+from cli_utility.filedata_extractor.unit_converter import UnitConverter
 
 
 class AudioFileFullExtractor(AudioFileMetadataExtractor):
-    KILO_CONVERT_INDEX = 1000
-    MINUTES_CONVERT_INDEX = 60
-
     def __init__(self, audio_type, tag_keys=None):
         super().__init__(audio_type, tag_keys)
         self.__extracted_stream_data = []
@@ -36,8 +33,8 @@ class AudioFileFullExtractor(AudioFileMetadataExtractor):
         except AttributeError:
             return None
         else:
-            return RoundResult.round_result(self.audio_type.info.bitrate / AudioFileFullExtractor.KILO_CONVERT_INDEX,
-                                            RoundResult.INT_ROUND_INDEX)
+            return UnitConverter.round_result(self.audio_type.info.bitrate / UnitConverter.KILO_CONVERT_INDEX,
+                                              UnitConverter.INT_ROUND_INDEX)
 
     def extract_exist_sample_rate(self):
         try:
@@ -45,8 +42,8 @@ class AudioFileFullExtractor(AudioFileMetadataExtractor):
         except AttributeError:
             return None
         else:
-            return RoundResult.round_result(self.audio_type.info.sample_rate / AudioFileFullExtractor.KILO_CONVERT_INDEX,
-                                            RoundResult.INT_ROUND_INDEX)
+            return UnitConverter.round_result(self.audio_type.info.sample_rate / UnitConverter.KILO_CONVERT_INDEX,
+                                              UnitConverter.INT_ROUND_INDEX)
 
     def extract_exist_length(self):
         try:
@@ -54,8 +51,10 @@ class AudioFileFullExtractor(AudioFileMetadataExtractor):
         except AttributeError:
             return None
         else:
-            return RoundResult.round_result(self.audio_type.info.length / AudioFileFullExtractor.MINUTES_CONVERT_INDEX,
-                                            RoundResult.FLOAT_ROUND_INDEX)
+            return self.audio_type.info.length
+
+                #UnitConverter.round_result(self.audio_type.info.length / AudioFileFullExtractor.MINUTES_CONVERT_INDEX,
+                                              #UnitConverter.FLOAT_ROUND_INDEX))
 
     def extract_exist_bits_per_sample(self):
         try:
